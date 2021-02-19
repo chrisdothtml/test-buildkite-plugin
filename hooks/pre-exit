@@ -1,14 +1,10 @@
 #!/bin/bash
 
-function do_stuff() {
-  i=60
-  while [ $i -gt 0 ]; do
-    echo "$i"
-    sleep 1
-    i=$((i-1))
-  done
-}
+trap '' SIGTERM
 
-trap do_stuff SIGTERM
-
-do_stuff
+i=60
+while [ $i -gt 0 ]; do
+  echo "$i"
+  sleep 1
+  i=$((i-1))
+done

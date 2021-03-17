@@ -1,3 +1,10 @@
-name: long cleanup
-description: plugin to test cleanup steps that take a long time
+name: config test
+description: plugin to test plugin config format
 author: https://github.com/chrisdothtml
+configuration:
+  properties:
+    vars:
+      type: array
+      items:
+        type: string
+  additionalProperties: false

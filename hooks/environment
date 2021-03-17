@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo "vars:"
+i=0
+while true; do
+  item="BUILDKITE_PLUGIN_CONFIG_TEST_VARS_${i}"
+  if [ -z "${!item:-}" ]; then break; fi
+  echo "$item"
+  ((i = i + 1))
+done

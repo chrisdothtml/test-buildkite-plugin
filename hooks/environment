@@ -1,10 +1,29 @@
 #!/bin/bash
 
-echo "vars:"
+echo "setting vars"
+
 i=0
 while true; do
-  item="BUILDKITE_PLUGIN_CONFIG_TEST_VARS_${i}"
-  if [ -z "${!item:-}" ]; then break; fi
-  echo "$item"
+  orig_var="BUILDKITE_PLUGIN_TEST_VARS_${i}"
+  item="${!orig_var}"
+  if [ -z "$item" ]; then break; fi
+
+  var_value="$item"
+  var_name=""
+
+  if [[ "$item" =~ ":" ]]; then
+    # shellcheck disable=SC2206
+    parts=(${item//\:/ })
+    var_name="${parts[1]}"
+    var_value="${parts[0]}"
+  else
+    var_name="$(echo "$var_value" | awk '{print toupper($0)}')"
+  fi
+
+  # shellcheck disable=SC2086,SC2059
+  printf -v $var_name "$var_value"
+  # shellcheck disable=SC2163,SC2086
+  export $var_name
+  echo "setting $var_name var"
   ((i = i + 1))
 done
